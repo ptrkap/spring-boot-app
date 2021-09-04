@@ -1,9 +1,9 @@
-package com.bank.domain;
+package com.bank.account;
 
+import com.bank.person.Person;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 
