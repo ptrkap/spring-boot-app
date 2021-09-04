@@ -30,6 +30,11 @@ public class PersonController {
         }
     }
 
+    @GetMapping("/people")
+    public List<Person> getAllPeople() {
+        return personRepository.findAll();
+    }
+
     @GetMapping("/people/name={name}")
     public List<Person> getPeopleByName(@PathVariable String name) {
         List<Person> people = personRepository.findByName(name);
@@ -50,7 +55,7 @@ public class PersonController {
     }
 
     @DeleteMapping("/people/{id}")
-    public void deletePerson(@PathVariable Long id){
+    public void deletePerson(@PathVariable Long id) {
         try {
             personRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
