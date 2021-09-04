@@ -1,6 +1,7 @@
 package com.bank.person;
 
 import lombok.AllArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,22 +33,28 @@ public class PersonController {
     @GetMapping("/people/name={name}")
     public List<Person> getPeopleByName(@PathVariable String name) {
         List<Person> people = personRepository.findByName(name);
+//        List<Person> people = personRepository.selectByName(name);
         return personService.getPeople(people);
     }
 
     @GetMapping("/people/age={age}")
-    public List<Person> getPeopleByAge(@PathVariable Long age) {
+    public List<Person> getPeopleByAge(@PathVariable Integer age) {
         List<Person> people = personRepository.findByAge(age);
+//        List<Person> people = personRepository.selectByAge(age);
         return personService.getPeople(people);
     }
 
-    @PutMapping("/poeple/id={id}&name={name}&age={age}")
+    @PutMapping("/people/id={id}&name={name}&age={age}")
     public void updatePerson(@PathVariable Long id, @PathVariable String name, @PathVariable Integer age) {
         personRepository.save(new Person(id, name, age));
     }
 
     @DeleteMapping("/people/{id}")
     public void deletePerson(@PathVariable Long id){
-        personRepository.deleteById(id);
+        try {
+            personRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }
