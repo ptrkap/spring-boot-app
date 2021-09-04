@@ -1,6 +1,5 @@
-package com.bank.account;
+package com.bank.domain;
 
-import com.bank.person.Person;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
