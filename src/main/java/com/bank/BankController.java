@@ -1,50 +1,16 @@
-package com.bank.controllers;
+package com.bank;
 
-import com.bank.repository.PersonRepository;
-import com.bank.domain.Account;
-import com.bank.domain.Person;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
 public class BankController {
 
-
-
     @GetMapping("/")
     public String sayHello(){
         return "hello there";
     }
-
-
-
-
-
-//    @PostMapping("/addperson")
-//    public void savePerson(@RequestBody Person person) {
-////        bankPersistence.save(new Person(6l, "name6", 66));
-//        personRepository.save(person);
-//    }
-
-
-
-
-
-//    @GetMapping("/persons")
-//    public List<Person> getPersons() {
-//        List<Person> persons = List.of(
-//                personRepository.findByName("name1"),
-//                personRepository.findByName("name2"),
-//                new Person(3l, "name3", 33),
-//                new Person(4l,"name4", 44)
-//        );
-//        return persons;
-//    }
-
 
 //    @GetMapping("accounts")
 //    public List<Account> getAccounts() {

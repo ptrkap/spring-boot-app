@@ -1,4 +1,4 @@
-package com.bank.domain;
+package com.bank.person;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

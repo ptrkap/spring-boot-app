@@ -1,9 +1,7 @@
-package com.bank.controllers;
+package com.bank.account;
 
-import com.bank.domain.Account;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.math.BigDecimal;
 
 @RestController
