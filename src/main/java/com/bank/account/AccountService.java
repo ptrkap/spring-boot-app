@@ -1,14 +1,15 @@
 package com.bank.account;
 
+import com.bank.Filter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AccountService {
 
     @Value("${spring.datasource.url}")
@@ -26,11 +27,9 @@ public class AccountService {
     @Value("${org.bar}")
     private Integer bar;
 
+    private final Filter<Account> filter;
+
     List<Account> getAccounts(List<Account> accounts) {
-        if (!accounts.isEmpty()) {
-            return accounts;
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        return filter.filter(accounts);
     }
 }
