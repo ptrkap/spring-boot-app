@@ -1,20 +1,41 @@
 package com.bank.account;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
+@ConfigurationProperties
+@PropertySource("classpath:misc.properties")
 public class AccountController {
 
-    private AccountRepository accountRepository;
-    private AccountService accountService;
+//    @Autowired
+//    Environment environment;
+
+    @Value("${spring.datasource.url}")
+    private String url;
+
+    @Value("${org.foo}")
+    private String foo;
+
+    private final AccountRepository accountRepository;
+    private final AccountService accountService;
 
     @PostMapping("/account")
     public void addAccount(@RequestBody Account account) {
@@ -33,6 +54,7 @@ public class AccountController {
 
     @GetMapping("/accounts")
     public List<Account> getAllAccounts() {
+//        environment.getProperty("spring.datasource.url");
         return accountRepository.findAll(Sort.by(Sort.Direction.ASC, "balance"));
     }
 
