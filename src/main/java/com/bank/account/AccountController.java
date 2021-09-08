@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import javax.websocket.server.PathParam;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -52,22 +53,22 @@ public class AccountController {
         }
     }
 
-    @GetMapping("/accounts")
+    @GetMapping("/all-accounts")
     public List<Account> getAllAccounts() {
 //        environment.getProperty("spring.datasource.url");
         return accountRepository.findAll(Sort.by(Sort.Direction.ASC, "balance"));
     }
 
-    @GetMapping("/accounts/balance={balance}")
-    public List<Account> getAccounts(@PathVariable BigDecimal balance){
+    @GetMapping("/accounts")
+    public List<Account> getAccounts(@PathParam("balance") BigDecimal balance){
         List<Account> accounts = accountRepository.findByBalance(balance);
         return accountService.getAccounts(accounts);
     }
 
-    @PutMapping("accounts/id={id}&balance={balance}")
-    public void updateAccount(@PathVariable Long id, @PathVariable BigDecimal balance) {
+    @PutMapping("accounts/{id}")
+    public void updateAccount(@PathVariable Long id, @RequestBody AccountDTO accountDTO) {
         Account account = getAccount(id);
-        account.setBalance(balance);
+        account.setBalance(accountDTO.getBalance());
         accountRepository.save(account);
     }
 
